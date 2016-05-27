@@ -1,7 +1,7 @@
 build:
   image: teaci/msys$$arch
   pull: true
-  shell: msys$$arch
+  shell: mingw$$arch
   commands:
     - if [ $$arch = 32 ]; then MINGW_PACKAGE_PREFIX=mingw-w64-i686; fi
     - if [ $$arch = 64 ]; then MINGW_PACKAGE_PREFIX=mingw-w64-x86_64; fi
