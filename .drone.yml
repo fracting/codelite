@@ -1,0 +1,15 @@
+build:
+  image: teaci/msys$$arch
+  pull: true
+  shell: msys$$arch
+  commands:
+    - if [ $$arch = 32 ]; then MINGW_PACKAGE_PREFIX=mingw-w64-i686; fi
+    - if [ $$arch = 64 ]; then MINGW_PACKAGE_PREFIX=mingw-w64-x86_64; fi
+    - pacman -S --needed --noconfirm --noprogressbar "${MINGW_PACKAGE_PREFIX}-hunspell" "${MINGW_PACKAGE_PREFIX}-libssh" "${MINGW_PACKAGE_PREFIX}-drmingw" "${MINGW_PACKAGE_PREFIX}-wxWidgets" "${MINGW_PACKAGE_PREFIX}-boost" "${MINGW_PACKAGE_PREFIX}-cmake" "${MINGW_PACKAGE_PREFIX}-clang"
+    - cmake -Wno-dev -G"MSYS Makefiles" -DPREFIX=${pkgdir}${MINGW_PREFIX} -DENABLE_CLANG=1 -DWITH_WEBVIEW=1
+    - make
+
+matrix:
+  arch:
+    - 64
+    - 32
